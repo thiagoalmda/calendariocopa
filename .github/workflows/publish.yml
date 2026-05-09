@@ -1,0 +1,62 @@
+name: Build & Publish Calendar
+
+on:
+  # Roda automaticamente uma vez por dia (06:00 UTC = 03:00 BRT).
+  schedule:
+    - cron: "0 6 * * *"
+  # Roda também a cada push na main (deploy imediato após mudanças).
+  push:
+    branches: [main]
+  # Permite disparar manualmente pela aba Actions.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Gera o .ics
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instala dependências
+        run: pip install -r requirements.txt
+
+      - name: Monta o site
+        env:
+          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+          FOOTBALL_DATA_COMPETITION: WC
+          FOOTBALL_DATA_SEASON: 2026
+          CALENDAR_NAMESPACE: worldcup-2026@calendariocopa
+        run: |
+          mkdir -p _site
+          cp web/index.html _site/index.html
+          python main.py --output _site/copa-2026.ics
+
+      - name: Faz upload do artefato do Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    name: Publica no GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

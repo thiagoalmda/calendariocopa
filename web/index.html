@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Calendário da Copa do Mundo 2026</title>
+    <meta
+      name="description"
+      content="Assine o calendário da Copa do Mundo 2026 e receba os jogos direto no Google Agenda — atualiza sozinho conforme as fases avançam."
+    />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --accent: #00875a;
+        --bg: #fafafa;
+        --fg: #1a1a1a;
+        --muted: #666;
+        --card: #ffffff;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #121212;
+          --fg: #f1f1f1;
+          --muted: #aaa;
+          --card: #1e1e1e;
+        }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+        line-height: 1.55;
+        padding: 2rem 1rem 4rem;
+      }
+      .wrap { max-width: 720px; margin: 0 auto; }
+      h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin: 0 0 0.5rem; }
+      .lead { color: var(--muted); margin: 0 0 2rem; }
+      .card {
+        background: var(--card);
+        border-radius: 14px;
+        padding: 1.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        margin-bottom: 1.25rem;
+      }
+      h2 { margin-top: 0; font-size: 1.15rem; }
+      ol, ul { padding-left: 1.25rem; }
+      ol li, ul li { margin-bottom: 0.4rem; }
+      code, .url {
+        font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+        background: rgba(127, 127, 127, 0.15);
+        padding: 0.15rem 0.4rem;
+        border-radius: 6px;
+        font-size: 0.92em;
+        word-break: break-all;
+      }
+      .url-row {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-block;
+        background: var(--accent);
+        color: #fff;
+        text-decoration: none;
+        padding: 0.55rem 1rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        border: 0;
+        cursor: pointer;
+      }
+      .btn.secondary {
+        background: transparent;
+        color: var(--accent);
+        border: 1px solid var(--accent);
+      }
+      .row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+      footer {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.85rem;
+        margin-top: 2rem;
+      }
+      a { color: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>🏆 Calendário da Copa do Mundo 2026</h1>
+      <p class="lead">
+        Adicione todos os jogos da Copa direto no seu Google Agenda. O calendário
+        é atualizado automaticamente — quando os confrontos das eliminatórias
+        forem definidos, eles aparecem sozinhos no seu app, sem precisar fazer
+        nada.
+      </p>
+
+      <div class="card">
+        <h2>🔗 URL do calendário</h2>
+        <p>
+          Esta é a URL que você usa para assinar. <strong>Copie-a:</strong>
+        </p>
+        <div class="url-row">
+          <code class="url" id="ics-url">copa-2026.ics</code>
+          <button class="btn" type="button" onclick="copyURL()">Copiar URL</button>
+        </div>
+        <div class="row">
+          <a class="btn secondary" id="download-link" href="copa-2026.ics" download>⬇️ Baixar .ics</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>📅 Como assinar no Google Agenda (recomendado)</h2>
+        <p>Assinando pela URL, o calendário se atualiza sozinho de tempos em tempos:</p>
+        <ol>
+          <li>Abra o <a href="https://calendar.google.com" target="_blank" rel="noopener">Google Agenda no computador</a>.</li>
+          <li>Na barra lateral esquerda, ao lado de <em>Outros calendários</em>, clique em <strong>+</strong>.</li>
+          <li>Escolha <strong>Subscrever por URL</strong>.</li>
+          <li>Cole a URL acima e clique em <strong>Adicionar calendário</strong>.</li>
+          <li>Pronto! Os jogos aparecem em todos os seus dispositivos.</li>
+        </ol>
+        <p style="color: var(--muted); font-size: 0.9rem;">
+          ℹ️ O Google atualiza calendários assinados a cada 12-24 horas. Para
+          forçar uma atualização, remova e adicione a URL novamente.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>📲 No celular</h2>
+        <p>
+          O Google Agenda do celular só mostra calendários adicionados pelo site.
+          Adicione a URL pelo computador (passo acima) e ela aparecerá
+          automaticamente no app do celular.
+        </p>
+        <p>
+          No <strong>iPhone</strong>, você também pode tocar no botão "Baixar .ics"
+          acima e o iOS oferecerá adicionar ao Apple Calendar.
+        </p>
+      </div>
+
+      <footer>
+        Atualizado automaticamente todo dia às 06:00 UTC ·
+        <a href="https://github.com" target="_blank" rel="noopener">código no GitHub</a>
+      </footer>
+    </div>
+
+    <script>
+      const url = new URL("copa-2026.ics", window.location.href).toString();
+      document.getElementById("ics-url").textContent = url;
+      document.getElementById("download-link").href = url;
+      function copyURL() {
+        navigator.clipboard.writeText(url).then(() => {
+          alert("URL copiada! Cole no Google Agenda → Adicionar por URL.");
+        });
+      }
+    </script>
+  </body>
+</html>
